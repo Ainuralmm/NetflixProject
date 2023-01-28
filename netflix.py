@@ -48,3 +48,46 @@ print(netflix_df.columns)
 
 # before moving to next cleaning part, I want to show how much the number of missing values in dataset
 print(netflix_df.isnull().sum())
+
+#THIRD PART. DATA CLEANING
+# Cleaning "DIRECTOR" column
+#so now I show how much the number of null values of 'director' column
+print(netflix_df['DIRECTOR'].isnull().sum())
+
+#here is removing rows containing null values of 'director' column 
+netflix_df.dropna(subset=['DIRECTOR'], inplace=True)
+
+#filling missing values as 'Unknown'
+netflix_df['DIRECTOR'] = netflix_df['DIRECTOR'].fillna('Unknown')
+
+#returning a final result of null values in coulmn
+print(netflix_df['DIRECTOR'].isnull().sum())
+
+#returning a final result of notnull values in column
+print(netflix_df['DIRECTOR'].notnull().sum())
+
+#checking null values with .info method
+print(netflix_df.info())
+
+#summing up null values with  .isnull method in all dataset
+print(netflix_df.isnull().sum())
+
+#Cleaning "CAST" column
+#so now for cleaning "Cast" column I will do same actions like above
+print(netflix_df['CAST'].isnull().sum())
+
+#removing rows containing null values of 'director' column 
+netflix_df.dropna(subset=['CAST'], inplace=True)
+
+#filling missing values as 'Unknown'
+netflix_df['CAST'] = netflix_df['CAST'].fillna('unknown')
+
+#returning a final result of null values in column
+print(netflix_df['CAST'].isnull().sum())
+
+#checking null values with .info method
+print(netflix_df.info())
+
+#summing up null values with  .isnull method in all dataset
+print(netflix_df.isnull().sum())
+
