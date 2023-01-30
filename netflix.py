@@ -91,3 +91,12 @@ print(netflix_df.info())
 #summing up null values with  .isnull method in all dataset
 print(netflix_df.isnull().sum())
 
+#Cleaning "COUNTRY" column
+#so I will do same actions like above
+print(netflix_df['COUNTRY'].isnull().sum())
+netflix_df.dropna(subset=['COUNTRY'], inplace=True)
+netflix_df['COUNTRY'] = netflix_df['COUNTRY'].fillna('unknown')
+print(netflix_df['COUNTRY'].isnull().sum())
+print(netflix_df['COUNTRY'].notnull().sum())
+print(netflix_df.info())
+print(netflix_df.isnull().sum())
