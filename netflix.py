@@ -249,3 +249,60 @@ plt.title('10 years with the highest total film releases', fontweight='bold', fo
 plt.ylabel('Content created')
 plt.xlabel('Year')
 plt.show()
+
+
+#SIXTH PART.MODELING
+# importing required tools from sklearn library
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import RandomForestClassifier
+
+#making copy of dataset
+netflix_df1=netflix_df.copy()
+
+# defining function for changing string values to numeric values for better modelling
+def encode_df(dataframe):
+    le = LabelEncoder()
+    for column in dataframe.columns:
+        dataframe[column] = le.fit_transform(dataframe[column])
+    return dataframe
+
+#this is our result
+print(encode_df(netflix_df1))
+
+# defining prediction values/i want to predict how much content will be every year 
+y_country = netflix_df1['RELEASE_YEAR']
+x_country = netflix_df1.drop(['RELEASE_YEAR'], axis=1)
+
+# defining train and test data
+x_train, x_test, y_train, y_test = train_test_split(x_country, y_country, test_size=0.2, random_state=42)
+# defining model and training data
+model = GaussianNB()
+model.fit(x_train, y_train)
+# prediction on test data
+y_pred = model.predict(x_test)
+# Calculating accuracy score
+accuracy_score(y_test, y_pred)
+print(sum(y_pred == y_test) / len(y_test))
+
+model = RandomForestClassifier()
+model.fit(x_train, y_train)
+y_pred = model.predict(x_test)
+accuracy_score(y_test, y_pred)
+
+
+#Classification
+#classification of every column to each other
+sns.pairplot(netflix_df1, height=1.5)
+
+#Practical Clustering
+#to make a clear clustering, i want to take only 100 rows from dataset
+netflix_df2=netflix_df1.head(100)
+#showing every countries and their movies/tv-shows usual duration
+#here between 0 and 25 are tv-shows
+plt.figure(figsize=(10,6))
+plt.scatter(netflix_df2['DURATION'], netflix_df2['COUNTRY'])
+plt.xlabel('DURATION')
+plt.ylabel('COUNTRY')
+plt.show()
