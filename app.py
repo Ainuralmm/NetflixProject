@@ -3,9 +3,33 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from PIL import Image
+
+#opening the image
+image = Image.open('netflixlog1.jpeg')
+#displaying the image on streamlit app
+st.image(image)
 
 st.title("NetFlix Project")
 st.header('FIRST PART')
+
+#Adding  a Background Image from a URL
+def add_bg_from_url():
+    st.markdown(
+         f"""
+         <style>
+         .stApp {{
+             background-image: url("https://www.ceotech.it/wp-content/uploads/2022/05/Netflix-offre-a-pochi-laccesso-anticipato-a-film-e-serie.jpg");
+             background-attachment: fixed;
+             background-size: cover
+         }}
+         </style>
+         """,
+         unsafe_allow_html=True
+     )
+
+add_bg_from_url() 
+
 
 # preparing the dataset
 df = pd.read_csv('https://gist.githubusercontent.com/Ainuralmm/3bd1ebbaac091981f031ea47e7b18b61/raw/3132d3a22bdaa9edec8a639a3eae9987d25730bd/gistfile1.txt')
@@ -21,7 +45,7 @@ st.dataframe(my_df.tail())
 # showing the size of dataframe (rows, columns)
 # netflix_df.shape
 st.subheader('The size of dataframe (rows, columns)')
-st.text(f'Data has {my_df.shape[1]} columns & {my_df.shape[0]} rows.')
+st.info(f'Data has {my_df.shape[1]} columns & {my_df.shape[0]} rows.')
 
 # getting information like min,max and mean about numeric columns in netflix dataframe
 st.subheader('Information about min,max and mean numeric columns in netflix dataframe')
@@ -33,7 +57,7 @@ st.dataframe(my_df.describe(include='all').T)
 
 #To get the list of column headers in the netflix dataframe
 st.subheader('The list of column headers')
-st.text(my_df.columns)
+st.info(my_df.columns)
 
 #to clean the dataset I remove a few unnecessary columns 
 st.subheader('Removing a few unnecessary columns with below code')
@@ -41,7 +65,6 @@ st.subheader('Removing a few unnecessary columns with below code')
 with st.echo():
     my_df.drop(['show_id','date_added','rating'], axis=1, inplace=True)
 
-#my_df.drop(['show_id','date_added','rating'], axis=1, inplace=True)
 
 #let's return to see the result
 st.subheader ('Let`s return the dataframe to see the result by clicking the button')
@@ -51,19 +74,17 @@ if st.button('Get a result'):
 #so I removed unneseccery columns and now I want to rename some columns 
 st.subheader('Renaming "type","title" columns with rename method')
 my_df.rename(columns={'type':'genre', 'title':'movie_title'}, inplace=True)
-st.text(my_df.columns)
+st.info(my_df.columns)
 
 #now I want to change headings' letters to capital letters
 st.subheader('Changing columns` headings to capital letters')
 my_df.columns = map(str.upper, my_df.columns)
-st.text(my_df.columns)
+st.info(my_df.columns)
 
 # before moving to next cleaning part, I want to show how much the number of missing values in dataset
 st.subheader('Before moving next cleaning part, let`s see how many the numbers of missing values ')
 if st.button('Get missing values'):
-    st.text(my_df.isnull().sum())
-
-
+    st.dataframe(my_df.isnull().sum())
 
 #THIRD PART. DATA CLEANING
 st.header('SECOND PART. DATA CLEANING')
@@ -71,7 +92,7 @@ st.header('SECOND PART. DATA CLEANING')
 #so now I show how much the number of null values of 'director' column
 st.subheader('Cleaning "DIRECTOR" column')
 st.text("Initially the number of null values of 'director' column")
-st.text(my_df['DIRECTOR'].isnull().sum())
+st.info(my_df['DIRECTOR'].isnull().sum())
 
 #here is removing rows containing null values of 'director' column 
 st.subheader('Dropping null values and filling with the string "Unknown"')
@@ -81,19 +102,19 @@ my_df['DIRECTOR'] = my_df['DIRECTOR'].fillna('Unknown')
 
 #returning a final result of null values in column
 st.text("After cleaning the number of null values in'director' column")
-st.text(my_df['DIRECTOR'].isnull().sum())
+st.info(my_df['DIRECTOR'].isnull().sum())
 
 #returning a final result of notnull values in column
 st.text('Returning a final result of notnull values in column')
-st.text(my_df['DIRECTOR'].notnull().sum())
+st.info(my_df['DIRECTOR'].notnull().sum())
 
 #checking null values with .info method
 st.text('Checking null values with .info method')
-st.text(my_df.info())
+st.info(my_df.info())
 #summing up null values with  .isnull method in all dataset
 st.text('Summing null values up with  .isnull method in all dataset')
-st.text(my_df.isnull().sum())
-st.text('So the cleaning of left columns will be same')
+st.dataframe(my_df.isnull().sum())
+st.warning('So the cleaning of left columns will be same')
 
 #Cleaning "CAST" column
 #removing rows containing null values of 'director' column 
@@ -118,7 +139,7 @@ my_df['DURATION'].fillna(my_df['DURATION'].mean(), inplace=True)
 
 st.subheader('Click a button to get a final result')
 if st.button('Get final numbers of null values in dataframe'):
-    st.text(my_df.isnull().sum())
+    st.dataframe(my_df.isnull().sum())
 
 #FOURTH PART. MORE EXPLORATION for Data Vizualiziotion
 #to show correlation I should change a type of 'duration' column to float

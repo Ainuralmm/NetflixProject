@@ -252,16 +252,16 @@ plt.xticks(rotation=45)
 plt.show()
 
 
-
-
-
-
 #SIXTH PART.MODELING
 # importing required tools from sklearn library
+import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import LabelEncoder
 
 #making copy of dataset
 netflix_df1=netflix_df.copy()
