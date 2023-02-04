@@ -167,6 +167,31 @@ plt.title('Number of Movies vs Number of TV-Shows', fontweight='bold', fontsize=
 plt.legend()
 plt.show()
 
+#total film releases
+plt.figure(figsize=(10,6))
+sns.set(style="whitegrid")
+sns.lineplot(data=highest_movie_releases)
+plt.title('Total movie releases', fontweight='bold', fontsize=14)
+plt.ylabel('Content created')
+plt.xlabel('Year')
+plt.show()
+
+#5 countries which created the most TV-Shows
+import pylab
+countries_with_the_most_tvshows.plot.pie(figsize=(10, 8),autopct='%1.1f%%',shadow=True,explode=(0.1, 0.1, 0.1, 0.1,0.1),colors=['blue', 'green', 'yellow', 'orange','red']);
+plt.title('5 countries which created the most TV-Shows', fontweight='bold', fontsize=14)
+pylab.ylabel('')
+plt.show()
+
+# Duration of content in dataset
+plt.figure(figsize=(10,6))
+sns.set(style="whitegrid")
+plt.plot(netflix_df.DURATION.value_counts().sort_index())
+plt.title('Duration of content in dataset', fontweight='bold', fontsize=14)
+plt.xlabel('Minutes')
+plt.ylabel('Amounts')
+plt.show()
+
 #top 10 contries which create contets
 plt.figure(figsize=(10,6))
 plt.title('Top 10 content creating countries',fontweight='bold', fontsize=14)
@@ -191,6 +216,13 @@ ax = sns.countplot(y="RELEASE_YEAR", data=netflix_df, palette="mako", order=netf
 plt.title ('Amount of content for last 15 years',fontweight='bold', fontsize=14)
 plt.show()
 
+#the amount of popular genres in dataset
+plt.figure(figsize=(12,10))
+sns.set(style="dark")
+ax = sns.countplot(y="LISTED_IN", data=netflix_df, palette="rocket", order=netflix_df.LISTED_IN.value_counts().index[0:10])
+plt.title ('Amount of popular genres in dataset',fontweight='bold', fontsize=14)
+plt.show()
+
 #top 10 directors who create content
 plt.figure(figsize=(10,6))
 plt.title('Top 10 directors who create contents',fontweight='bold', fontsize=14)
@@ -208,47 +240,20 @@ ax = sns.countplot(y="DIRECTOR", data=netflix_df, palette="husl", order=netflix_
 plt.title('Top 10 directors who create contents',fontweight='bold', fontsize=14)
 plt.show()
 
-# Duration of content in dataset
+#top 10 actors 
 plt.figure(figsize=(10,6))
-sns.set(style="whitegrid")
-plt.plot(netflix_df.DURATION.value_counts().sort_index())
-plt.title('Duration of content in dataset', fontweight='bold', fontsize=14)
-plt.xlabel('Minutes')
-plt.ylabel('Amounts')
-plt.show()
-
-#the amount of content was created last 15 years
-plt.figure(figsize=(12,10))
-sns.set(style="dark")
-ax = sns.countplot(y="LISTED_IN", data=netflix_df, palette="rocket", order=netflix_df.LISTED_IN.value_counts().index[0:10])
-plt.title ('Amount of content for last 15 years',fontweight='bold', fontsize=14)
-plt.show()
-
-#top 30 directors who create content
-plt.figure(figsize=(10,6))
+sns.set(style="darkgrid")
 plt.title('Top 10 actors', fontweight='bold', fontsize=14)
 x = most_popular_10_actors.index
 y = most_popular_10_actors
 plt.ylabel('Content created',fontweight='bold', fontsize=14)
-plt.bar(x, y, color=['purple', 'violet', 'indigo', 'blue', 'brown'])
+plt.bar(x, y, color=['purple','violet'])
 plt.xticks(rotation=45)
 plt.show()
 
-#5 countries which created the most TV-Shows
-import pylab
-countries_with_the_most_tvshows.plot.pie(figsize=(10, 8),autopct='%1.1f%%',shadow=True,explode=(0.1, 0.1, 0.1, 0.1,0.1),colors=['blue', 'green', 'yellow', 'orange','red']);
-plt.title('5 countries which created the most TV-Shows', fontweight='bold', fontsize=14)
-pylab.ylabel('')
-plt.show()
 
-#10 years with the highest total film releases
-plt.figure(figsize=(10,6))
-sns.set(style="whitegrid")
-sns.lineplot(data=highest_movie_releases)
-plt.title('10 years with the highest total film releases', fontweight='bold', fontsize=14)
-plt.ylabel('Content created')
-plt.xlabel('Year')
-plt.show()
+
+
 
 
 #SIXTH PART.MODELING

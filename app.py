@@ -134,16 +134,22 @@ top_10_directors = netflix_df['DIRECTOR'].value_counts()[0:10]
 #so to get clear info about the 10 most popular i should to remove comma
 most_popular_10_actors = pd.concat([pd.Series(i.split(',')) for i in netflix_df.CAST]).value_counts().head(10)
 print(most_popular_10_actors)
+
 #dataframe where are showed only movies
 netflix_movie = netflix_df['GENRE']=='Movie'
 print(netflix_df[netflix_movie])
+
 #10 years with the highest total film releases
 highest_movie_releases=netflix_df[netflix_movie]['RELEASE_YEAR'].value_counts()[0:10]
 highest_movie_releases.name=None
 print(highest_movie_releases)
+
 #tv-shows dataframe 
 netflix_tvshows = netflix_df['GENRE']=='TV Show'
 print(netflix_df[netflix_tvshows])
+#10 Countries with the Most TV Shows
+countries_with_the_most_tvshows = netflix_df[netflix_tvshows]['COUNTRY'].value_counts()[0:5]
+print(countries_with_the_most_tvshows)
 
 #FIFTH PART.DATA VISUALIZATION
 #so first I will show a correlation between 2 columns
@@ -156,7 +162,7 @@ st.caption('Because other columns are string')
 fig, ax = plt.subplots(figsize=(10,6)) # show what happens when you change sizes
 sns.heatmap(netflix_df.corr(), annot=True, ax=ax)
 st.write(fig)
-st.text("As you understand the correlation between 2 colums is very weak")
+st.text("As you understand the correlation between 2 columns is very weak")
 
 #another important to provide is number of movies and tv-shows in dataset
 st.subheader('Number of movies and tv-shows in dataset')
@@ -166,9 +172,36 @@ ax1.pie(netflix_df['GENRE'].value_counts(), labels=labels, autopct='%.2f%%', sta
 ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 st.pyplot(fig1)
 
+#total movie releases
+st.subheader('Total film releases')
+sns.set(style="whitegrid")
+fig1, ax1 = plt.subplots(figsize=(10,6))
+sns.set(style="whitegrid")
+ax = sns.lineplot(data = highest_movie_releases)
+fig2 = plt.ylabel('Content created')
+ax2 = plt.xlabel('Year')
+st.write(fig1)
+
+#5 countries which created the most TV-Shows
+import pylab
+st.subheader('5 countries which created the most TV-Shows')
+fig1, ax1 = plt.subplots(figsize=(10,8))
+countries_with_the_most_tvshows.plot.pie(autopct='%1.1f%%',shadow=True,explode=(0.1, 0.1, 0.1, 0.1,0.1),colors=['blue', 'green', 'yellow', 'orange','red']);
+pylab.ylabel('')
+st.pyplot(fig1)
+
+#Duration of content in dataset
+st.subheader('Duration of content in dataset')
+fig1, ax1 = plt.subplots(figsize=(10,6))
+sns.set(style="whitegrid")
+ax = plt.plot(netflix_df.DURATION.value_counts().sort_index())
+fig2 = plt.xlabel('Minutes')
+ax2 = plt.ylabel('Amounts')
+st.write(fig1)
+st.caption('from 0 to 50 is duration of seosons')
+
 #top 10 contries which create contets
 top_10_countries = netflix_df['COUNTRY'].value_counts()[0:10]
-
 st.subheader('Top 10 content creating countries')
 fig1, ax1 = plt.subplots(figsize=(10,6))
 st.bar_chart(top_10_countries)
@@ -187,7 +220,24 @@ sns.set(style="dark")
 ax = sns.countplot(y="RELEASE_YEAR", data=netflix_df, palette="mako", order=netflix_df.RELEASE_YEAR.value_counts().index[-15:])
 st.write(fig1)
 
+#the amount of popular genres in dataset
+st.subheader('Amount of popular genres in dataset')
+fig1, ax1 = plt.subplots(figsize=(12,10))
+sns.set(style="dark")
+ax = sns.countplot(y="LISTED_IN", data=netflix_df, palette="rocket", order=netflix_df.LISTED_IN.value_counts().index[0:10])
+st.write(fig1)
+
 #top 10 directors who create content
 st.subheader('Top 10 directors who create contents')
 fig, ax = plt.subplots(figsize=(10,6))
 st.bar_chart(top_10_directors)
+
+
+#top 10 actors 
+st.subheader('Top 10 actors')
+fig1, ax1 = plt.subplots(figsize=(10,6))
+st.bar_chart(most_popular_10_actors)
+
+
+
+
