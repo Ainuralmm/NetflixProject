@@ -5,6 +5,28 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from PIL import Image
 
+#Configuration of screen in streamlit
+#adding a sidebar
+with st.sidebar:
+    st.header('Information about project')
+    st.subheader('Netflix')
+    st.info('Netflix is one of the most popular media and video streaming platforms. They have over 8000 movies or tv shows available on their platform, as of mid-2021, they have over 200M Subscribers globally. This tabular dataset consists of listings of all the movies and tv shows available on Netflix, along with details such as - cast, directors, ratings, release year, duration, etc')
+    st.warning('In 2018, they released an interesting report which shows that the number of TV shows on Netflix has nearly tripled since 2010. The streaming service’s number of movies has decreased by more than 2,000 titles since 2010, while its number of TV shows has nearly tripled. It will be interesting to explore what all other insights can be obtained from the same dataset.')
+    st.subheader ('Features in df')
+    st.info('SHOW-ID - Unique id of each show (not much of a use for us in this notebook)')
+    st.info('TYPE - The category of a show, can be either a Movie or a TV Show')
+    st.info('TITLE - Name of the show')
+    st.info('DIRECTOR - Name of the director(s) of the show')
+    st.info('CAST - Name of the show')
+    st.info('COUNTRY - The name of the countries in which the show is produced')
+    st.info('RELEASE YEAR - Release year of the show')
+    st.info('DATE ADDED - Date when the show was added on Netflix')
+    st.info('RATING - Show rating on netflix')
+    st.info('DURATION - Time duration of the show')
+    st.info('LISTED IN - Genre of the show')
+
+
+
 #opening the image
 image = Image.open('netflixlog1.jpeg')
 #displaying the image on streamlit app
@@ -31,15 +53,16 @@ def add_bg_from_url():
 add_bg_from_url() 
 
 
+
 # preparing the dataset
 df = pd.read_csv('https://gist.githubusercontent.com/Ainuralmm/3bd1ebbaac091981f031ea47e7b18b61/raw/3132d3a22bdaa9edec8a639a3eae9987d25730bd/gistfile1.txt')
 my_df = pd.DataFrame(df)
 # showing first 5 rows of netflix dataframe
-st.subheader("Df head")
+st.subheader("Dataframe's head")
 st.dataframe(my_df.head())
 
 # showing last 5 rows of netflix dataframe
-st.subheader("Df tail")
+st.subheader("Dataframe's tail")
 st.dataframe(my_df.tail())
 
 # showing the size of dataframe (rows, columns)
